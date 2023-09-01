@@ -1,0 +1,89 @@
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+set background=dark
+
+" Configuration vim Airline
+set laststatus=2
+
+let g:airline#extensions#tabline#enabled=1
+let g:airline_powerline_fonts=1
+
+" Configuration NERDTree
+map <F5> :NERDTreeToggle<CR>
+
+" Configuration floaterm
+let g:floaterm_keymap_toggle = '<F12>'
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.9
+
+" Configuration Vim.FZF
+let g:fzf_preview_window = 'right:50%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
+
+set pastetoggle=<F2>
+set clipboard=unnamed
+"
+" Rebind <Leader> key
+" I like to have it here becuase it is easier to reach than the default and
+" it is next to ``m`` and ``n`` which I use for navigating between tabs.
+let mapleader = ","
+
+" Bind nohl
+" Removes highlight of your last search
+" ``<C>`` stands for ``CTRL`` and therefore ``<C-n>`` stands for ``CTRL+n``
+noremap <C-n> :nohl<CR>
+vnoremap <C-n> :nohl<CR>
+inoremap <C-n> :nohl<CR>
+nnoremap <leader><space> :noh<cr>
+
+" bind Ctrl+<movement> keys to move around the windows, instead of using
+" Ctrl+w + <movement>
+" Every unnecessary keystroke that can be saved is good for your health :)
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Re-Open Previously Opened File
+nnoremap <Leader><Leader> :e#<CR>
+nnoremap <Leader>b ::CtrlPBuffer<CR>
+
+" Highlight trailing whitespaces
+highlight Error ctermbg=red ctermfg=white guibg=red guifg=white
+autocmd ColorScheme * highlight Error ctermbg=red ctermfg=white guibg=red guifg=white
+match Error '\s\+$'
+autocmd WinEnter,BufWinEnter * match Error /\s\+$/
+autocmd InsertEnter * match Error /\s\+\%#\@<!$/
+autocmd InsertLeave * match Error /\s\+$/
+autocmd WinLeave,BufWinLeave * match Error //
+
+" strip all trailing whitespace in the current file with <leader>W
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" NERDTree
+let NERDTreeMapActivateNode='<right>'
+let NERDTreeShowHidden=1
+let NERDTreeShowBookmarks=1
+let g:NERDTreeWinSize = 35
+nmap <leader>. :NERDTreeToggle<CR>
+nmap <leader>j :NERDTreeFind<CR>
+let NERDTreeIgnore=['\.git', '\.swp']
+if has("gui_macvim")
+  autocmd VimEnter * NERDTree
+  autocmd VimEnter * wincmd p
+endif
+let g:NERDTreeBookmarksFile = '${HOME}/.vim/.nerdtreebookmarks'
+"Open NERDTree if no files specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+map + <c-w>>
+map - <c-w><
+
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
+autocmd FileType sh setlocal shiftwidth=4 tabstop=4
+autocmd FileType vim setlocal shiftwidth=2 tabstop=2
+
