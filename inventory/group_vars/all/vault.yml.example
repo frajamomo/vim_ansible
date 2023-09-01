@@ -1,0 +1,12 @@
+---
+# Copy this file to vault.yml and fill in your values, then encrypt:
+#   cp vault.yml.example vault.yml
+#   vi vault.yml
+#   ansible-vault encrypt vault.yml
+
+# Target hosts
+vault_e14_host: "192.168.x.x"
+vault_rpi_host: "192.168.x.x"
+
+# User
+vault_user: "your_username"

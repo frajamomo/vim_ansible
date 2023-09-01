@@ -1,0 +1,8 @@
+*.swp
+*.log
+*.code-workspace
+*.retry
+
+# Ansible vault (encrypted secrets)
+inventory/group_vars/all/vault.yml
+

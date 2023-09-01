@@ -1,0 +1,11 @@
+- name: Config Vim with plugins
+  hosts: all
+  ignore_unreachable: true
+  gather_facts: true
+  become: true
+  become_user: "{{ vault_user }}"
+
+  tasks:
+    - name: Configure Vim using role
+      import_role:
+        name: vim

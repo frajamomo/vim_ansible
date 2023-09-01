@@ -1,0 +1,24 @@
+- name: Facts demo
+  hosts: "{{ my_host | default('localhost') }}"
+  gather_facts: true
+  become: false
+
+  tasks:
+
+    - name: Ensure that important facts are displayed
+      debug:
+        msg: |
+
+          My system name: {{ ansible_facts['hostname'] }}
+
+          My FQDN: {{ ansible_facts['fqdn'] }}
+
+          My Operating System: {{ ansible_facts['distribution'] }}
+
+          My root filesystem has: {{ ansible_facts['mounts'][0]['size_available'] | human_readable }} available
+
+          How I am referenced in the inventory is as: {{ inventory_hostname }}
+
+          The groups which I am a member of are: {{ group_names | regex_replace("'") | regex_replace("\[") | regex_replace("\]") }}
+
+          The groups which I am a member of are: {{ group_names }}
