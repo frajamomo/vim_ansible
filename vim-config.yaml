@@ -56,6 +56,10 @@
           url: https://github.com/tpope/vim-fugitive
         - name: vim-floaterm
           url: https://github.com/voldikss/vim-floaterm
+        - name: ale
+          url: https://github.com/dense-analysis/ale.git
+        - name: ctrlp.vim
+          url: https://github.com/kien/ctrlp.vim.git
 
     - name: Ensure .vimrc config in place
       copy:
