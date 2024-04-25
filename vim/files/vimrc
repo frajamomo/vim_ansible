@@ -89,7 +89,7 @@ map - <c-w><
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType sh setlocal shiftwidth=4 tabstop=4
 autocmd FileType vim setlocal shiftwidth=2 tabstop=2
-autocmd FileType yaml setlocal ai et sw=2 ts:2 sts:2 nu cuc
+autocmd FileType yaml setlocal ai et sw=2 ts:2 sts:2 cuc
 
 let g:ale_enabled = 0
 
