@@ -1,5 +1,5 @@
 - name: Config Vim with plugins
-  hosts: rhel9_3
+  hosts: vm
   gather_facts: yes
   become: yes
   become_method: sudo

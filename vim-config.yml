@@ -1,5 +1,5 @@
 - name: Config Vim with plugins
-  hosts: rhel9_3
+  hosts: vm
   gather_facts: yes
   become: no
   user: javier
