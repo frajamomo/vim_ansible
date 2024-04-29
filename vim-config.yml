@@ -1,7 +1,8 @@
 - name: Config Vim with plugins
-  hosts: localhost
+  hosts: rhel9_3
   gather_facts: yes
   become: no
+  user: javier
 
   tasks:
     - name: Configure Vim using role

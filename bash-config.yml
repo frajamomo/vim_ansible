@@ -1,0 +1,30 @@
+- name: Config Vim with plugins
+  hosts: rhel9_3
+  gather_facts: yes
+  become: yes
+  become_method: sudo
+  user: javier
+
+  tasks:
+
+    - name: Show ansible variables
+      ansible.builtin.debug:
+        var: ansible_facts['distribution']
+
+    - name: Ensure git prompt is in place
+      ansible.builtin.copy:
+        src: gitps1.sh
+        dest: /home/javier/.gitps1.sh
+        owner: javier
+        group: javier
+        mode: '0644'
+
+    - name: Ensure color prompt in shell
+      when: ansible_facts['distribution'] == "RedHat"
+      ansible.builtin.lineinfile:
+        path: /home/javier/.bashrc
+        line: 'source ~/.gitps1.sh'
+        state: present
+        create: true
+
+
