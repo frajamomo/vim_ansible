@@ -1,0 +1,21 @@
+provisionhost-titan60 ansible_user=kni
+tsunami
+rhel9_3
+
+[provisionhosts]
+provisionhost-titan60
+
+[home_fedora]
+ansible
+
+[vm:children]
+north
+south
+
+[north]
+managed1
+managed2
+
+[south]
+managed3
+managed4
