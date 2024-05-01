@@ -18,6 +18,7 @@
 
   - name: Reboot when packages were updated
     reboot:
+    become: yes
     when: dnf_update_status.changed
 
 - hosts: apt

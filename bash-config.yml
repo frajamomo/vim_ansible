@@ -1,12 +1,9 @@
 - name: Config Vim with plugins
-  hosts: vm
+  hosts: development
   gather_facts: yes
-  become: yes
-  become_method: sudo
   user: javier
 
   tasks:
-
     - name: Show ansible variables
       ansible.builtin.debug:
         var: ansible_facts['distribution']
@@ -19,7 +16,7 @@
         group: javier
         mode: '0644'
 
-    - name: Ensure color prompt in shell
+    - name: Ensure git prompt in shell
       when: ansible_facts['distribution'] == "RedHat"
       ansible.builtin.lineinfile:
         path: /home/javier/.bashrc
