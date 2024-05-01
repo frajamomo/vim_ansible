@@ -1,5 +1,6 @@
 - name: Config Vim with plugins
-  hosts: vm
+  hosts: development
+  ignore_unreachable: true
   gather_facts: yes
   become: no
   user: javier
