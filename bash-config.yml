@@ -1,5 +1,6 @@
 - name: Config Vim with plugins
-  hosts: development
+  hosts: "{{ development | default('localhost') }}"
+  ignore_unreachable: true
   gather_facts: yes
   user: javier
 

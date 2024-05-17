@@ -11,7 +11,7 @@
       update_only: yes
     register: dnf_update_status
 
-  - name: Remove packates not needed anymore
+  - name: Remove packages not needed anymore
     become: yes
     dnf:
       autoremove: yes
