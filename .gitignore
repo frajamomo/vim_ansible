@@ -1,1 +1,4 @@
 *.swp
+*.log
+*.code-workspace
+
