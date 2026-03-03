@@ -19,7 +19,7 @@
         mode: '0644'
 
     - name: Ensure git prompt in shell
-      when: ansible_facts['distribution'] == "RedHat"
+      when: ansible_facts['os_family'] == "RedHat"
       ansible.builtin.lineinfile:
         path: "/home/{{ vault_user }}/.bashrc"
         line: 'source ~/.gitps1.sh'
