@@ -1,0 +1,21 @@
+---
+- name: Configure DNS search domain on Fedora hosts
+  hosts: dnf
+  ignore_unreachable: true
+  become: yes
+
+  tasks:
+    - name: Get active NetworkManager connection name
+      command: nmcli -t -f NAME connection show --active
+      register: active_connections
+      changed_when: false
+
+    - name: Add lan search domain to active connections
+      command: nmcli connection modify "{{ item }}" ipv4.dns-search "lan"
+      loop: "{{ active_connections.stdout_lines }}"
+      when: item != 'lo'
+
+    - name: Restart NetworkManager to apply changes
+      ansible.builtin.systemd:
+        name: NetworkManager
+        state: restarted
