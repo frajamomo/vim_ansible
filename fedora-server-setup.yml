@@ -63,6 +63,17 @@
               PubkeyAuthentication yes
       notify: restart sshd
 
+    - name: Disable suspend and sleep targets
+      become: true
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        masked: true
+      loop:
+        - sleep.target
+        - suspend.target
+        - hibernate.target
+        - hybrid-sleep.target
+
     - name: Ensure {{ target_user }} has passwordless sudo
       become: true
       ansible.builtin.copy:
