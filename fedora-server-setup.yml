@@ -1,18 +1,18 @@
 ---
-# Initial bootstrap playbook for the fedora server (192.168.2.14).
+# Initial bootstrap playbook for the tsunami server (192.168.2.14).
 # First run uses password auth to deploy SSH keys and configure the server.
 #
 # Usage:
-#   ansible-playbook fedora-server-setup.yml --limit fedora --vault-password-file ~/.ansible-vault.txt
+#   ansible-playbook tsunami-server-setup.yml --limit tsunami --vault-password-file ~/.ansible-vault.txt
 #
 # After first run, SSH key auth will work and the password vars can be removed.
 
-- name: Bootstrap fedora server with passwordless SSH from LAN
-  hosts: fedora
+- name: Bootstrap tsunami server with passwordless SSH from LAN
+  hosts: tsunami
   gather_facts: false
   vars:
-    ansible_ssh_pass: "{{ vault_fedora_password }}"
-    ansible_become_pass: "{{ vault_fedora_password }}"
+    ansible_ssh_pass: "{{ vault_tsunami_password }}"
+    ansible_become_pass: "{{ vault_tsunami_password }}"
     ansible_ssh_private_key_file: ""
     local_network: "192.168.2.0/24"
     target_user: "{{ vault_user }}"
@@ -79,7 +79,7 @@
         state: restarted
 
 - name: Verify passwordless SSH access works
-  hosts: fedora
+  hosts: tsunami
   gather_facts: false
 
   tasks:
@@ -89,5 +89,5 @@
     - name: Show success message
       ansible.builtin.debug:
         msg: >-
-          Passwordless SSH access to fedora server (192.168.2.14)
+          Passwordless SSH access to tsunami server (192.168.2.14)
           as {{ vault_user }} is working.
