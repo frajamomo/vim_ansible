@@ -1,0 +1,11 @@
+---
+- name: Install packages on Fedora hosts
+  hosts: dnf
+  ignore_unreachable: true
+  become: yes
+
+  tasks:
+    - name: Ensure btop is installed
+      dnf:
+        name: btop
+        state: present
