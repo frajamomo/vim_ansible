@@ -10,3 +10,6 @@ vault_rpi_host: "192.168.x.x"
 
 # User
 vault_user: "your_username"
+
+# Fedora server (192.168.2.14)
+vault_fedora_password: "your_password"
