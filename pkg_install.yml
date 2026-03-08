@@ -5,14 +5,11 @@
   become: yes
 
   tasks:
-    - name: Ensure btop is installed
+    - name: Ensure required packages are installed
       dnf:
-        name: btop
-        state: present
-
-    - name: Ensure rhythmbox is installed
-      dnf:
-        name: rhythmbox
+        name:
+          - btop
+          - rhythmbox
         state: present
 
     - name: Get VLC Flatpak runtime version
