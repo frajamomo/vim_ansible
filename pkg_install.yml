@@ -10,6 +10,11 @@
         name: btop
         state: present
 
+    - name: Ensure rhythmbox is installed
+      dnf:
+        name: rhythmbox
+        state: present
+
     - name: Get VLC Flatpak runtime version
       ansible.builtin.command: flatpak info org.videolan.VLC --show-runtime
       register: vlc_runtime
