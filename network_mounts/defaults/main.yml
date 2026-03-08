@@ -1,0 +1,12 @@
+---
+synology_host: "{{ vault_synology_host }}"
+synology_user: "{{ vault_synology_user }}"
+synology_password: "{{ vault_synology_password }}"
+
+synology_shares:
+  - temp
+  - video
+  - music
+
+synology_mount_opts: "credentials={{ synology_credentials_file }},uid=1000,gid=1000,iocharset=utf8"
+synology_credentials_file: /etc/synology-credentials

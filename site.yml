@@ -2,5 +2,6 @@
 - import_playbook: vim-config.yml
 - import_playbook: pkg_install.yml
 - import_playbook: dns-config.yml
+- import_playbook: network-mounts.yml
 - import_playbook: pkg_update.yml
 

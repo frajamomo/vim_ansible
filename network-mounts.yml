@@ -1,0 +1,7 @@
+---
+- name: Configure network mounts on Fedora servers
+  hosts: fedora_servers
+  become: yes
+
+  roles:
+    - network_mounts

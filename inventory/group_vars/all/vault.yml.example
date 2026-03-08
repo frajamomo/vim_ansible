@@ -13,3 +13,8 @@ vault_user: "your_username"
 
 # Fedora server (192.168.2.14)
 vault_fedora_password: "your_password"
+
+# Synology NAS
+vault_synology_host: "192.168.x.x"
+vault_synology_user: "your_username"
+vault_synology_password: "your_password"
