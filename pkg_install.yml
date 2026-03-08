@@ -9,3 +9,17 @@
       dnf:
         name: btop
         state: present
+
+    - name: Get VLC Flatpak runtime version
+      ansible.builtin.command: flatpak info org.videolan.VLC --show-runtime
+      register: vlc_runtime
+      changed_when: false
+      failed_when: false
+
+    - name: Install ffmpeg-full Flatpak extension for VLC codecs
+      ansible.builtin.command: >
+        flatpak install -y flathub
+        org.freedesktop.Platform.ffmpeg-full//{{ vlc_runtime.stdout.split('/')[-1].split('-', 1)[-1] }}
+      register: ffmpeg_install
+      changed_when: "'already installed' not in ffmpeg_install.stderr"
+      when: vlc_runtime.rc == 0
