@@ -9,4 +9,4 @@ synology_shares:
   - music
 
 synology_mount_opts: "credentials={{ synology_credentials_file }},uid=1000,gid=1000,iocharset=utf8"
-synology_credentials_file: /etc/synology-credentials
+synology_credentials_file: "/home/{{ synology_user }}/.synology-credentials"

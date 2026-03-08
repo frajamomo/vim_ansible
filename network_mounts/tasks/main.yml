@@ -10,8 +10,8 @@
       username={{ synology_user }}
       password={{ synology_password }}
     dest: "{{ synology_credentials_file }}"
-    owner: root
-    group: root
+    owner: "{{ synology_user }}"
+    group: "{{ synology_user }}"
     mode: "0600"
   no_log: true
 
