@@ -3,7 +3,7 @@
 # First run uses password auth to deploy SSH keys and configure the server.
 #
 # Usage:
-#   ansible-playbook tsunami-server-setup.yml --limit tsunami --vault-password-file ~/.ansible-vault.txt
+#   ansible-playbook fedora-server-setup.yml --limit tsunami --vault-password-file ~/.ansible-vault.txt
 #
 # After first run, SSH key auth will work and the password vars can be removed.
 
@@ -14,7 +14,6 @@
     ansible_ssh_pass: "{{ vault_tsunami_password }}"
     ansible_become_pass: "{{ vault_tsunami_password }}"
     ansible_ssh_private_key_file: ""
-    local_network: "192.168.2.0/24"
     target_user: "{{ vault_user }}"
 
   tasks:
@@ -35,34 +34,6 @@
         key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
         state: present
 
-    - name: Ensure sshd allows PubkeyAuthentication
-      become: true
-      ansible.builtin.lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: '^#?PubkeyAuthentication'
-        line: 'PubkeyAuthentication yes'
-        state: present
-      notify: restart sshd
-
-    - name: Ensure AuthorizedKeysFile is configured
-      become: true
-      ansible.builtin.lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: '^#?AuthorizedKeysFile'
-        line: 'AuthorizedKeysFile .ssh/authorized_keys'
-        state: present
-      notify: restart sshd
-
-    - name: Allow key-based SSH from local network
-      become: true
-      ansible.builtin.blockinfile:
-        path: /etc/ssh/sshd_config
-        marker: "# {mark} ANSIBLE MANAGED - LAN access"
-        block: |
-          Match Address {{ local_network }}
-              PubkeyAuthentication yes
-      notify: restart sshd
-
     - name: Disable suspend and sleep targets
       become: true
       ansible.builtin.systemd:
@@ -81,13 +52,6 @@
         dest: "/etc/sudoers.d/{{ target_user }}"
         mode: '0440'
         validate: 'visudo -cf %s'
-
-  handlers:
-    - name: restart sshd
-      become: true
-      ansible.builtin.systemd:
-        name: sshd
-        state: restarted
 
 - name: Verify passwordless SSH access works
   hosts: tsunami
