@@ -1,0 +1,43 @@
+---
+# Harden SSH on all home servers to only allow key-based access
+# from the local network and VPN subnets.
+#
+# Usage:
+#   ansible-playbook ssh-hardening.yml --vault-password-file ~/.ansible-vault.txt
+#   ansible-playbook ssh-hardening.yml --limit raspberrypi --vault-password-file ~/.ansible-vault.txt
+
+- name: Harden SSH access on home servers
+  hosts: home_servers
+  become: true
+
+  tasks:
+    - name: Ensure sshd allows PubkeyAuthentication
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PubkeyAuthentication'
+        line: 'PubkeyAuthentication yes'
+        state: present
+      notify: restart sshd
+
+    - name: Ensure AuthorizedKeysFile is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?AuthorizedKeysFile'
+        line: 'AuthorizedKeysFile .ssh/authorized_keys'
+        state: present
+      notify: restart sshd
+
+    - name: Allow key-based SSH from local and VPN networks
+      ansible.builtin.blockinfile:
+        path: /etc/ssh/sshd_config
+        marker: "# {mark} ANSIBLE MANAGED - LAN and VPN access"
+        block: |
+          Match Address {{ allowed_networks | join(',') }}
+              PubkeyAuthentication yes
+      notify: restart sshd
+
+  handlers:
+    - name: restart sshd
+      ansible.builtin.systemd:
+        name: sshd
+        state: restarted

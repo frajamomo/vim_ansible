@@ -1,0 +1,22 @@
+---
+- name: Configure GNOME desktop settings on Fedora hosts
+  hosts: dnf
+  ignore_unreachable: true
+  gather_facts: false
+
+  vars:
+    gnome_settings:
+      # Enable middle-click (PRIMARY selection) paste for GTK apps (e.g. terminal)
+      - schema: org.gnome.desktop.interface
+        key: gtk-enable-primary-paste
+        value: "true"
+
+  tasks:
+    - name: Apply GNOME gsettings
+      community.general.dconf:
+        key: "/{{ item.schema | replace('.', '/') }}/{{ item.key }}"
+        value: "{{ item.value }}"
+        state: present
+      loop: "{{ gnome_settings }}"
+      loop_control:
+        label: "{{ item.schema }} {{ item.key }}"
